@@ -1,4 +1,6 @@
 # Scrapping-News-Data
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/ronald55/scrapping-news-data/main/main.py)
+
 Web Scrapping news data from leading newspapers in Zimbabwe. The app includes newspapers such as [Herald Zimbabwe](https://www.herald.co.zw/category/articles/top-stories) , [Chronicle](https://www.chronicle.co.zw/category/s6-demo-section/c37-top-stories/), [Sunday Mail](https://www.sundaymail.co.zw/category/news/top-stories) among others
 
 #### What is web scrapping
@@ -23,4 +25,5 @@ streamlit run main.py
 ```
 
 #### Dashboard Example: 
+Click [Here](https://share.streamlit.io/ronald55/scrapping-news-data/main/main.py) to view the demo
 ![Dashboard](components/img/image.png "Web Scrapping Dashboard")
