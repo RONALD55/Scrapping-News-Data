@@ -111,34 +111,36 @@ def home():
         fetch_articles('https://www.manicapost.co.zw/category/top-stories/')
 
 def fetch_articles(url):
-    data = (zim_news_top_stories(url))
-    st.markdown(f"""
-                            <div class="container-fluid">
-                                  <div class="mt-1">
-                                    <!-- For demo purpose -->
-                                    <div class="row py-3">
-                                      <div class="col-lg-12 mx-auto">
-                                        <div class="text-white p-2 shadow-sm rounded banner">
-                                          <p class="lead">
-                                          Webscrapping covid top stories & other news for zim leading newspapers
-                                          </p>
+    try:
+        data = (zim_news_top_stories(url))
+        st.markdown(f"""
+                                <div class="container-fluid">
+                                      <div class="mt-1">
+                                        <!-- For demo purpose -->
+                                        <div class="row py-3">
+                                          <div class="col-lg-12 mx-auto">
+                                            <div class="text-white p-2 shadow-sm rounded banner">
+                                              <p class="lead">
+                                              Webscrapping covid top stories & other news for zim leading newspapers
+                                              </p>
+                                            </div>
+                                          </div>
                                         </div>
-                                      </div>
-                                    </div>
-                            </div>
-                        </div>""", unsafe_allow_html=True)
+                                </div>
+                            </div>""", unsafe_allow_html=True)
 
-    cols = cycle(st.columns(4))
-    for i, top_story in enumerate(data):
+        cols = cycle(st.columns(4))
+        for i, top_story in enumerate(data):
 
-        try:
-            img = Image.open(requests.get(top_story[2].encode('utf-8').strip(), stream=True).raw)
-            next(cols).image(img, width=150, caption=top_story[1] + "\n\n" + top_story[0])
+            try:
+                img = Image.open(requests.get(top_story[2].encode('utf-8').strip(), stream=True).raw)
+                next(cols).image(img, width=150, caption=top_story[1] + "\n\n" + top_story[0])
 
 
-        except:
-            next(cols).image("./components/img/logo.ico", width=150, caption=top_story[1] + "\n\n" + top_story[0])
-
+            except:
+                next(cols).image("./components/img/logo.ico", width=150, caption=top_story[1] + "\n\n" + top_story[0])
+    except ConnectionError as e:
+        st.error("There is a connection error please retry later 😥")
 
 def other_tab():
     st.header("Other TAB")
