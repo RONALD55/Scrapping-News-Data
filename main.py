@@ -11,7 +11,7 @@ from streamlit_option_menu import option_menu
 def config():
     file_path = "./components/img/"
     img = Image.open(os.path.join(file_path, 'logo.ico'))
-    st.set_page_config(page_title='COVID-DASHBOARD', page_icon=img, layout="wide", initial_sidebar_state="expanded")
+    st.set_page_config(page_title='ZIM NEWS WEB SCRAPPER', page_icon=img, layout="wide", initial_sidebar_state="expanded")
 
     # code to check turn of setting and footer
     st.markdown(""" <style>
