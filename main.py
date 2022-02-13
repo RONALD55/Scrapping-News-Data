@@ -81,12 +81,11 @@ def home():
     newspapers = ["Herald Zimbabwe", "Sunday Mail", "Hmetro", "Chronicle", "Suburban", "Manica Post"]
     col1,col2=st.columns(2)
     with col1:
-        option = st.selectbox('please select country?', (newspapers), help="Please select country")
+        option = st.selectbox('please newspaper?', (newspapers), help="Please select newspaper")
         annotated_text(
             ("", option)
         )
-    with col2:
-        pass
+
 
 
     remote_css("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
