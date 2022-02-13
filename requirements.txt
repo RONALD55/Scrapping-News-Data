@@ -1,0 +1,6 @@
+requests~=2.24.0
+bs4~=0.0.1
+beautifulsoup4~=4.9.3
+streamlit~=1.4.0
+Pillow~=7.2.0
+st-annotated-text
