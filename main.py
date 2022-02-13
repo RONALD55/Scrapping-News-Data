@@ -11,7 +11,8 @@ from streamlit_option_menu import option_menu
 def config():
     file_path = "./components/img/"
     img = Image.open(os.path.join(file_path, 'logo.ico'))
-    st.set_page_config(page_title='ZIM NEWS WEB SCRAPPER', page_icon=img, layout="wide", initial_sidebar_state="expanded")
+    st.set_page_config(page_title='ZIM NEWS WEB SCRAPPER', page_icon=img, layout="wide",
+                       initial_sidebar_state="expanded")
 
     # code to check turn of setting and footer
     st.markdown(""" <style>
@@ -57,36 +58,39 @@ def remote_css(url):
 def remote_js(url):
     st.markdown(f'<script src={url} ></script', unsafe_allow_html=True)
 
+
 def icon(icon_name):
     st.markdown(f'<i class="material-icons">{icon_name}</i>', unsafe_allow_html=True)
 
 
 def zim_news_top_stories(url):
-    page = requests.get(url)
-    soup = BeautifulSoup(page.content, 'html.parser')
-    articles = soup.find_all(class_="hentry sirius-card")
     aggregates = []
+    try:
+        page = requests.get(url)
+        soup = BeautifulSoup(page.content, 'html.parser')
+        articles = soup.find_all(class_="hentry sirius-card")
 
-    for article in articles:
-        links = [i['href'] for i in article.select('a')]
-        titles = [i.get('alt') for i in article.select('link')]
-        image = [i['data-src'] for i in article.select('img')]
-        content = [i.text for i in article.select('p')]
-        aggregates.append([links[0], titles[0], image[0], content[0]])
+
+        for article in articles:
+            links = [i['href'] for i in article.select('a')]
+            titles = [i.get('alt') for i in article.select('link')]
+            image = [i['data-src'] for i in article.select('img')]
+            content = [i.text for i in article.select('p')]
+            aggregates.append([links[0], titles[0], image[0], content[0]])
+    except ConnectionError:
+        st.error("There is a connection error please retry later 😥")
     return aggregates
 
 
 def home():
     st.header("Zim Top Stories")
     newspapers = ["Herald Zimbabwe", "Sunday Mail", "Hmetro", "Chronicle", "Suburban", "Manica Post"]
-    col1,col2=st.columns(2)
+    col1, col2 = st.columns(2)
     with col1:
-        option = st.selectbox('please newspaper?', (newspapers), help="Please select newspaper")
+        option = st.selectbox('please select newspaper?', (newspapers), help="Please select newspaper")
         annotated_text(
             ("", option)
         )
-
-
 
     remote_css("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
     remote_css("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css")
@@ -109,6 +113,7 @@ def home():
 
     elif option == "Manica Post":
         fetch_articles('https://www.manicapost.co.zw/category/top-stories/')
+
 
 def fetch_articles(url):
     try:
@@ -139,8 +144,9 @@ def fetch_articles(url):
 
             except:
                 next(cols).image("./components/img/logo.ico", width=150, caption=top_story[1] + "\n\n" + top_story[0])
-    except ConnectionError as e:
+    except:
         st.error("There is a connection error please retry later 😥")
+
 
 def other_tab():
     st.header("Other TAB")
@@ -153,6 +159,7 @@ def main():
                              default_index=0)
 
     home() if (choice == "Home") else other_tab()
+
 
 if __name__ == '__main__':
     main()
